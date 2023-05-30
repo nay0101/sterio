@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -8,7 +8,7 @@ const orderSchema = new Schema(
       // type: Schema.Types.ObjectId,
       // ref: 'User',
       type: String,
-      required: true
+      required: true,
     },
     products: [
       {
@@ -19,25 +19,29 @@ const orderSchema = new Schema(
         },
         quantity: {
           type: Number,
-          default: 1
-        }
-      }
+          default: 1,
+        },
+        title: {
+          type: String,
+        },
+      },
     ],
     amount: {
       type: Number,
-      required: true
+      required: true,
     },
     address: {
       type: Object,
-      required: true
+      required: true,
     },
     status: {
       type: String,
-      default: "pending"
-    }
-  }, {
-  timestamps: true
-}
+      default: "pending",
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model("Order", orderSchema);

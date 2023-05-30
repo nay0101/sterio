@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentUser: null,
   isFetching: false,
-  error: false
+  error: false,
 };
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     loginStart(state) {
@@ -19,10 +19,34 @@ const authSlice = createSlice({
     loginFailure(state) {
       state.isFetching = false;
       state.error = true;
-    }
-  }
+    },
+    registerStart(state) {
+      state.isFetching = true;
+    },
+    registerSuccess(state, action) {
+      state.isFetching = false;
+      state.currentUser = action.payload;
+    },
+    registerFailure(state) {
+      state.isFetching = false;
+      state.error = true;
+    },
+    logoutStart(state) {
+      state.isFetching = false;
+      state.currentUser = null;
+      state.error = false;
+    },
+  },
 });
 
-export const { loginStart, loginSuccess, loginFailure } = authSlice.actions;
+export const {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  logoutStart,
+  registerStart,
+  registerFailure,
+  registerSuccess,
+} = authSlice.actions;
 
 export default authSlice;

@@ -1,16 +1,14 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv").config();
 
-const userRoutes = require('./routes/user');
-const cartRoutes = require('./routes/cart');
-const orderRoutes = require('./routes/order');
-const productRoutes = require('./routes/product');
-const authRoutes = require('./routes/auth');
-const stripeRoutes = require('./routes/stripe');
-
-dotenv.config();
+const userRoutes = require("./routes/user");
+const cartRoutes = require("./routes/cart");
+const orderRoutes = require("./routes/order");
+const productRoutes = require("./routes/product");
+const authRoutes = require("./routes/auth");
+const stripeRoutes = require("./routes/stripe");
 
 const app = express();
 
@@ -19,28 +17,32 @@ app.use(bodyParser.json());
 
 // CORS
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/carts', cartRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/checkout', stripeRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/carts", cartRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/checkout", stripeRoutes);
 
 // Error
 app.use((req, res) => {
   res.status(404).json({
-    message: 'Error serving the request !'
+    message: "Error serving the request !",
   });
 });
 
-mongoose.connect(process.env.MONGO_URL)
+mongoose
+  .connect(process.env.MONGO_URL)
   .then(() => {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
@@ -50,4 +52,3 @@ mongoose.connect(process.env.MONGO_URL)
   .catch((error) => {
     console.log(error);
   });
-
