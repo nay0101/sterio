@@ -24,6 +24,9 @@ const orderSchema = new Schema(
         title: {
           type: String,
         },
+        size: {
+          type: String,
+        },
       },
     ],
     amount: {

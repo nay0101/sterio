@@ -20,8 +20,8 @@
     "inStock": true
   },
   {
-    "title": "Small Metal Bike",
-    "description": "The Football Is Good For Training And Recreational Purposes",
+    "title": "Long Sleeve Sweater",
+    "description": "Stay stylish and cozy with our classic white sweater. Made from a soft and comfortable fabric, it's perfect for any occasion. The versatile design and timeless color make it a wardrobe staple. Shop now and elevate your everyday look with this must-have sweater.",
     "image": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
     "category": "clothes",
     "size": ["S", "M", "L"],

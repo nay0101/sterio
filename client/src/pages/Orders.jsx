@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../layout/Navbar";
 import Announcement from "../layout/Announcement";
 import Footer from "../layout/Footer";
+import NewsLetter from "../components/Newsletter";
 import { userRequest } from "../request-methods";
 import { useSelector } from "react-redux";
 
@@ -57,7 +58,9 @@ const Orders = () => {
                     key={product._id}
                     className="flex align-center justify-between pb-1"
                   >
-                    <div>{product.title}</div>
+                    <div>
+                      {product.title} - {product.size}
+                    </div>
                     <div>{product.quantity}</div>
                   </div>
                 ))}
@@ -68,6 +71,7 @@ const Orders = () => {
           <div>No Order History</div>
         )}
       </section>
+      <NewsLetter />
       <Footer />
     </>
   );

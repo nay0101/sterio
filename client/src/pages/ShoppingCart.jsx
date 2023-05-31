@@ -21,6 +21,7 @@ const ShoppingCart = () => {
 
   const continueShoppingClickHandler = () => {
     history.goBack();
+    // console.log(cart);
   };
 
   const removeProducts = () => {
@@ -29,7 +30,7 @@ const ShoppingCart = () => {
 
   const onToken = (token) => {
     setStripeToken(token);
-    console.log(token);
+    // console.log(token);
   };
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const ShoppingCart = () => {
           productId: item._id,
           quantity: item.quantity,
           title: item.title,
+          size: item.size,
         });
       });
       try {
