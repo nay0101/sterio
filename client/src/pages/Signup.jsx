@@ -50,12 +50,14 @@ const Signup = () => {
             type="text"
             placeholder="First Name"
             ref={firstNameRef}
+            id="firstName"
           />
           <input
             className="block p-2 border-2 rounded focus:outline-none"
             type="text"
             placeholder="Last Name"
             ref={lastNameRef}
+            id="lastName"
           />
         </div>
         <div className="grid gap-4 md:grid-cols-2 mb-4">
@@ -64,12 +66,14 @@ const Signup = () => {
             type="text"
             placeholder="Username"
             ref={usernameRef}
+            id="username"
           />
           <input
             className="block p-2 border-2 rounded focus:outline-none"
             type="text"
             placeholder="Email"
             ref={emailRef}
+            id="email"
           />
         </div>
         <div className="grid gap-4 md:grid-cols-2 mb-4">
@@ -78,6 +82,7 @@ const Signup = () => {
             type="password"
             placeholder="Password"
             ref={passwordRef}
+            id="password"
           />
           {/* <input
             className='block p-2 border-2 rounded focus:outline-none'
@@ -93,7 +98,9 @@ const Signup = () => {
             Privacy policy
           </a>
         </p>
-        <button className="mb-4 bg-teal-700 text-white p-2">Create</button>
+        <button className="mb-4 bg-teal-700 text-white p-2" id="signUpBtn">
+          Create
+        </button>
         <Link to="/login" className="capitalize underline mb-4">
           Already have an account
         </Link>

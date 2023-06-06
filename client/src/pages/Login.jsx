@@ -40,16 +40,19 @@ const Login = () => {
           type="text"
           placeholder="Username"
           ref={usernameRef}
+          id="username"
         />
         <input
           className="p-2 mb-4 border-2 rounded focus:outline-none"
           type="password"
           placeholder="Password"
           ref={passwordRef}
+          id="password"
         />
         <button
           className="mb-4 bg-teal-700 text-white p-2 disabled:bg-teal-500 disabled:cursor-not-allowed"
           disabled={auth.isFetching}
+          id="loginBtn"
         >
           Login
         </button>
