@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../layout/Navbar";
 import Announcement from "../layout/Announcement";
 import Footer from "../layout/Footer";
-import NewsLetter from "../components/Newsletter";
 import { userRequest } from "../request-methods";
 import { useSelector } from "react-redux";
 
@@ -71,7 +70,6 @@ const Orders = () => {
           <div>No Order History</div>
         )}
       </section>
-      <NewsLetter />
       <Footer />
     </>
   );
