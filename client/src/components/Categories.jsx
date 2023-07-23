@@ -1,10 +1,12 @@
 import React from "react";
 
 import Categorie from "./Categorie";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   return (
     <section className="p-8" id="categories">
+      <p>Categories</p>
       <div className="grid gap-2 md:grid-cols-3 mb-2">
         <Categorie
           name="Clothes"
@@ -29,6 +31,7 @@ const Categories = () => {
           image="https://images.unsplash.com/photo-1597696929736-6d13bed8e6a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
         />
       </div>
+      <Link to="#">See More</Link>
     </section>
   );
 };

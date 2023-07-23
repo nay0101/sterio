@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <nav className="grid grid-cols-2 p-4 border-b font-semibold h-18">
       <h1 className="font-bold text-3xl uppercase flex items-center justify-start px-4 tracking-wider">
-        <a href="/">SECO</a>
+        <a href="/">Sterio</a>
       </h1>
       {user ? (
         <div className="flex justify-end items-center px-4 text-md md:text-lg">
@@ -24,7 +24,7 @@ const Navbar = () => {
             {user.username}
           </a>
           <Link to="/orders" className="uppercase px-4 py-2">
-            Orders
+            Subscriptions
           </Link>
           <Link
             to="/"
@@ -33,7 +33,7 @@ const Navbar = () => {
           >
             Logout
           </Link>
-          <Link to="/cart">
+          {/* <Link to="/cart">
             <Badge
               badgeContent={totalQantity}
               color="primary"
@@ -41,7 +41,7 @@ const Navbar = () => {
             >
               <ShoppingCart />
             </Badge>
-          </Link>
+          </Link> */}
         </div>
       ) : (
         <div className="flex justify-end items-center px-4 text-md md:text-lg">
@@ -51,7 +51,7 @@ const Navbar = () => {
           <Link to="/login" className="uppercase px-4 py-2">
             Sign in
           </Link>
-          <Link to="/cart">
+          {/* <Link to="/cart">
             <Badge
               badgeContent={totalQantity}
               color="primary"
@@ -59,7 +59,7 @@ const Navbar = () => {
             >
               <ShoppingCart />
             </Badge>
-          </Link>
+          </Link> */}
         </div>
       )}
     </nav>

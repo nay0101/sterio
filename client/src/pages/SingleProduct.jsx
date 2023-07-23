@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactPlayer from "react-player";
 
 import { Add, Remove } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
@@ -40,12 +41,14 @@ const SingleProduct = () => {
     <>
       <Announcement />
       <Navbar />
-      <section className="p-8 grid md:grid-cols-2 gap-8">
+      <section className="p-8 grid md:grid-cols-1 gap-8">
         <div className="grow">
-          <img
-            src={product.image}
-            alt={product.title}
-            className="w-full h-full object-cover"
+          <ReactPlayer
+            controls={true}
+            light="../video/test1.jpg"
+            width="100%"
+            height={700}
+            url="../video/test1.mp4"
           />
         </div>
         <div className="grow">
