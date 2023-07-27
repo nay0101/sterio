@@ -24,7 +24,12 @@ const Movies = ({ category, title }) => {
 
   return (
     <section className="pb-8 mx-8" id="products">
-      {title && <p className="uppercase">{title}</p>}
+      {title && (
+        <div className="flex justify-between mb-4">
+          <p className="text-3xl uppercase font-bold">{title}</p>
+          <Link to="#">See All Movies</Link>
+        </div>
+      )}
       <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4">
         {products.map((product) => (
           <Movie key={product._id} image={product.image} id={product._id} />
