@@ -17,7 +17,7 @@ const filmSchema = new Schema(
     },
     views: {
       type: Number,
-      required: true,
+      required: false,
     },
     year: {
       type: Number,
@@ -32,6 +32,14 @@ const filmSchema = new Schema(
       required: true,
     },
     casts: {
+      type: String,
+      required: true,
+    },
+    poster: {
+      type: String,
+      required: true,
+    },
+    thumbnail: {
       type: String,
       required: true,
     },

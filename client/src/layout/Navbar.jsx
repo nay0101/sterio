@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Badge } from "@mui/material";
-import { ShoppingCart } from "@mui/icons-material";
+import { SearchRounded, ShoppingCart } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store/auth-actions";
@@ -10,6 +10,7 @@ import Search from "../components/Search";
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.currentUser);
+  const [open, setOpen] = useState(false);
   const totalQantity = useSelector((store) => store.cart.totalQantity);
   const userLogout = () => {
     dispatch(logout());
@@ -35,37 +36,25 @@ const Navbar = () => {
             >
               Logout
             </Link>
-            {/* <Link to="/cart">
-            <Badge
-              badgeContent={totalQantity}
-              color="primary"
-              className="cursor-pointer"
-            >
-              <ShoppingCart />
-            </Badge>
-          </Link> */}
+
+            <SearchRounded />
           </div>
         ) : (
-          <div className="flex justify-end items-center px-4 text-md md:text-lg">
-            <Link to="/signup" className="uppercase px-4 py-2">
+          <div className="flex justify-end items-center px-4 text-md md:text-lg gap-5">
+            <Link to="/signup" className="uppercase ">
               Register
             </Link>
-            <Link to="/login" className="uppercase px-4 py-2">
+            <Link to="/login" className="uppercase ">
               Sign in
             </Link>
-            {/* <Link to="/cart">
-            <Badge
-              badgeContent={totalQantity}
-              color="primary"
+            <SearchRounded
               className="cursor-pointer"
-            >
-              <ShoppingCart />
-            </Badge>
-          </Link> */}
+              onClick={() => setOpen(true)}
+            />
           </div>
         )}
       </nav>
-      <Search />
+      {open && <Search setOpen={setOpen} />}
     </>
   );
 };

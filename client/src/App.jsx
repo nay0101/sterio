@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import Home from "./pages/Home";
 import ShoppingCategorie from "./pages/ShoppingCategorie";
-import SingleProduct from "./pages/SingleProduct";
+import FilmDetail from "./pages/FilmDetail";
 import ShoppingCart from "./pages/ShoppingCart";
 import Orders from "./pages/Orders";
 import Signup from "./pages/Signup";
@@ -21,8 +21,8 @@ const App = () => {
       <Route path="/categories/:category">
         <ShoppingCategorie />
       </Route>
-      <Route path="/products/:id">
-        <SingleProduct />
+      <Route path="/film/:id">
+        <FilmDetail />
       </Route>
       <Route path="/cart">
         <ShoppingCart />

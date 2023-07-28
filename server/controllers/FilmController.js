@@ -1,63 +1,135 @@
 const Film = require("../models/films");
 const Rating = require("../models/ratings");
+const fs = require("fs");
+
+// const stream = async (req, res) => {
+//   const { film_id } = req.params;
+
+//   try {
+//     const film = await Film.findOne({ _id: film_id });
+//     if (!film) {
+//       error = "Error";
+//       return res.status(200).send({ error });
+//     }
+
+//     const filePath = film.source;
+//     const stat = fs.statSync(filePath);
+//     const fileSize = stat.size;
+
+//     const range = req.headers.range;
+//     if (range) {
+//       const positions = rangeParser(fileSize, range);
+//       const start = positions[0].start;
+//       const end = positions[0].end;
+//       const chunkSize = end - start + 1;
+//       const stream = fs.createReadStream(filePath, { start, end });
+//       res.writeHead(206, {
+//         "Content-Type": "video/mp4",
+//         "Content-Length": chunkSize,
+//         "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+//         "Accept-Ranges": "bytes",
+//       });
+//       stream.pipe(res);
+//     } else {
+//       const stream = fs.createReadStream(filePath);
+//       res.writeHead(200, {
+//         "Content-Type": "video/mp4",
+//         "Content-Length": fileSize,
+//         "Accept-Ranges": "bytes",
+//       });
+//       stream.pipe(res);
+//     }
+//   } catch (err) {
+//     res.sendStatus(400);
+//   }
+// };
 
 const stream = async (req, res) => {
   const { film_id } = req.params;
-
   try {
     const film = await Film.findOne({ _id: film_id });
     if (!film) {
-      error = "Error";
+      let error = "Error";
       return res.status(200).send({ error });
     }
-
     const filePath = film.source;
+    // const filePath = "public\\videos\\sound.mp4";
+    if (!filePath) {
+      return res.status(404).send("File not found");
+    }
+
     const stat = fs.statSync(filePath);
     const fileSize = stat.size;
-
     const range = req.headers.range;
+
     if (range) {
-      const positions = rangeParser(fileSize, range);
-      const start = positions[0].start;
-      const end = positions[0].end;
-      const chunkSize = end - start + 1;
-      const stream = fs.createReadStream(filePath, { start, end });
-      res.writeHead(206, {
-        "Content-Type": "video/mp4",
-        "Content-Length": chunkSize,
+      const parts = range.replace(/bytes=/, "").split("-");
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+      const chunksize = end - start + 1;
+      const file = fs.createReadStream(filePath, { start, end });
+      const head = {
         "Content-Range": `bytes ${start}-${end}/${fileSize}`,
         "Accept-Ranges": "bytes",
-      });
-      stream.pipe(res);
-    } else {
-      const stream = fs.createReadStream(filePath);
-      res.writeHead(200, {
+        "Content-Length": chunksize,
         "Content-Type": "video/mp4",
+      };
+      res.writeHead(206, head);
+      file.pipe(res);
+    } else {
+      const head = {
         "Content-Length": fileSize,
-        "Accept-Ranges": "bytes",
-      });
-      stream.pipe(res);
+        "Content-Type": "video/mp4",
+      };
+      res.writeHead(200, head);
+      fs.createReadStream(filePath).pipe(res);
     }
+  } catch (e) {
+    res.sendStatus(400);
+  }
+};
+
+const getFilm = async (req, res) => {
+  const { film_id } = req.params;
+  try {
+    let result = await Film.findById(film_id);
+    res.status(200).send({ result });
+  } catch (err) {
+    res.sendStatus(400);
+  }
+};
+
+const getFilms = async (req, res) => {
+  try {
+    const result = await Film.find();
+    res.status(200).json({ result });
   } catch (err) {
     res.sendStatus(400);
   }
 };
 
 const uploadFilm = async (req, res) => {
-  const { film_name, film_description, views, year, tags, director, casts } =
+  const { filmName, filmDescription, views, year, tags, director, casts } =
     req.body;
-  const file = req.file;
-  const source = file.path;
+  const file = req.files;
+  const source = file["source"][0].path;
+  const thumbnail = file["thumbnail"][0].path;
+  const poster = file["poster"][0].path;
   try {
+    console.log(file);
     const result = await Film.create({
-      film_name,
-      film_description,
+      film_name: filmName,
+      film_description: filmDescription,
       views,
       year,
       tags,
       director,
       casts,
       source,
+      thumbnail,
+      poster,
+      views: 0,
     });
     res.status(201).send({ film_id: result._id });
   } catch (err) {
@@ -106,4 +178,12 @@ const rateFilm = async (req, res) => {
   }
 };
 
-module.exports = { stream, uploadFilm, updateFilm, deleteFilm, rateFilm };
+module.exports = {
+  stream,
+  getFilm,
+  getFilms,
+  uploadFilm,
+  updateFilm,
+  deleteFilm,
+  rateFilm,
+};
