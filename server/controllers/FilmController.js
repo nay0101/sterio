@@ -1,5 +1,6 @@
 const Film = require("../models/films");
 const Rating = require("../models/ratings");
+const Category = require("../models/categories");
 const fs = require("fs");
 
 // const stream = async (req, res) => {
@@ -102,7 +103,16 @@ const getFilm = async (req, res) => {
 
 const getFilms = async (req, res) => {
   try {
-    const result = await Film.find();
+    const result = await Film.find().sort({ createdAt: -1 });
+    res.status(200).json({ result });
+  } catch (err) {
+    res.sendStatus(400);
+  }
+};
+
+const getRandomFilms = async (req, res) => {
+  try {
+    const result = await Film.aggregate([{ $sample: { size: 2 } }]);
     res.status(200).json({ result });
   } catch (err) {
     res.sendStatus(400);
@@ -110,26 +120,38 @@ const getFilms = async (req, res) => {
 };
 
 const uploadFilm = async (req, res) => {
+  const createCategory = async (category) => {
+    const result = await Category.findOne({ name: category });
+    if (result) return;
+    if (!result) {
+      await Category.create({
+        name: category,
+      });
+    }
+  };
   const { filmName, filmDescription, views, year, tags, director, casts } =
     req.body;
   const file = req.files;
+  const categoryList = tags.toLowerCase().split(";");
   const source = file["source"][0].path;
   const thumbnail = file["thumbnail"][0].path;
   const poster = file["poster"][0].path;
   try {
-    console.log(file);
     const result = await Film.create({
       film_name: filmName,
       film_description: filmDescription,
       views,
       year,
-      tags,
+      tags: tags.toLowerCase(),
       director,
       casts,
-      source,
-      thumbnail,
-      poster,
+      source: source.replaceAll("\\", "/"),
+      thumbnail: thumbnail.replaceAll("\\", "/"),
+      poster: poster.replaceAll("\\", "/"),
       views: 0,
+    });
+    categoryList.forEach((category) => {
+      createCategory(category);
     });
     res.status(201).send({ film_id: result._id });
   } catch (err) {
@@ -178,6 +200,15 @@ const rateFilm = async (req, res) => {
   }
 };
 
+const categories = async (req, res) => {
+  try {
+    const result = await Category.find().sort({ name: 1 });
+    res.status(200).json({ result });
+  } catch (e) {
+    res.sendStatus(400);
+  }
+};
+
 module.exports = {
   stream,
   getFilm,
@@ -186,4 +217,6 @@ module.exports = {
   updateFilm,
   deleteFilm,
   rateFilm,
+  getRandomFilms,
+  categories,
 };

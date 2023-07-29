@@ -1,6 +1,8 @@
 import { CloseRounded, SearchRounded } from "@mui/icons-material";
 import { useState } from "react";
 import { BASE_URL, publicRequest } from "../request-methods";
+import { Link } from "react-router-dom";
+import { SHOW_DEFAULT_POSTER } from "../defaults";
 
 const Search = ({ setOpen }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -16,7 +18,7 @@ const Search = ({ setOpen }) => {
     }
   };
 
-  const search = (e) => {
+  const search = () => {
     const search_value = searchValue.toLowerCase();
     const filtered_items = films.filter((film) => {
       const name = film.film_name;
@@ -50,16 +52,19 @@ const Search = ({ setOpen }) => {
           />
         </div>
 
-        <div className="flex flex-col justify-start items-start mt-3 w-3/6 max-h-96 bg-white overflow-y-auto rounded">
+        <div className="flex flex-col justify-start items-start mt-3 w-3/6 h-4/5 bg-white overflow-y-auto rounded">
           {filteredResults &&
             filteredResults.map((result, index) => (
-              <div
+              <Link
+                to={`/film/${result._id}`}
                 key={index}
-                className="flex items-start justify-start w-full p-3 gap-2 overflow-hidden cursor-pointer hover:bg-teal-50"
+                className="flex items-start justify-start w-full p-3 gap-2 cursor-pointer hover:bg-teal-50"
+                onClick={() => setOpen(false)}
               >
                 <img
-                  className="w-1/4 md:h-40 h-32 object-cover"
+                  className="lg:w-1/4 w-1/2 h-80 object-cover"
                   src={`${BASE_URL}/${result.poster}`}
+                  onError={SHOW_DEFAULT_POSTER}
                 />
                 <div className="flex flex-col">
                   <p className="text-xl font-bold mb-3">
@@ -69,7 +74,7 @@ const Search = ({ setOpen }) => {
                     {result.film_description}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>

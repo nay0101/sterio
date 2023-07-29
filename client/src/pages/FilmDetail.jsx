@@ -1,108 +1,119 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 
-import { Add, Remove } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
-import { publicRequest } from "../request-methods";
-import { addProduct } from "../store/cart-slice";
+import { BASE_URL, publicRequest } from "../request-methods";
 
 import Navbar from "../layout/Navbar";
 import Announcement from "../layout/Announcement";
 import Footer from "../layout/Footer";
-import Newsletter from "../components/Newsletter";
+import { useSelector } from "react-redux";
 
 const FilmDetail = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const [product, setProduct] = useState({});
-  let [quantity, setQuantity] = useState(1);
-  let [size, setSize] = useState("S");
-  const getProduct = async () => {
+  const [film, setFilm] = useState({});
+  const [tags, setTags] = useState([]);
+  const [casts, setCasts] = useState([]);
+  const [director, setDirector] = useState([]);
+  const user = useSelector((store) => store.auth.currentUser);
+
+  const getFilm = async () => {
     try {
-      const url = `/products/${id}`;
-      const response = await publicRequest.get(url);
-      setProduct(response.data);
+      const url = `/film/${id}`;
+      const { result } = (await publicRequest.get(url)).data;
+      setCasts(result.casts.split(";"));
+      setTags(result.tags.split(";"));
+      setDirector(result.director.split(";"));
+      setFilm(result);
     } catch (error) {
       console.log(error);
     }
   };
-  const sizeChangeHandler = (e) => {
-    setSize(e.target.value);
-  };
-  const addToCartHandler = () => {
-    dispatch(addProduct({ product, size, quantity }));
-  };
+
   useEffect(() => {
-    getProduct();
-  }, []);
+    getFilm();
+  }, [id]);
+
   return (
     <>
       <Announcement />
       <Navbar />
       <section className="p-8 grid md:grid-cols-1 gap-8">
         <div className="grow">
-          <ReactPlayer
-            controls={true}
-            light="../video/test1.jpg"
-            width="100%"
-            height={700}
-            url="../video/test1.mp4"
-          />
+          {user && user.subscription_status === "Active" ? (
+            <ReactPlayer
+              controls={true}
+              light={`${BASE_URL}/${film.thumbnail}`}
+              width="100%"
+              height={800}
+              url={`${BASE_URL}/film/stream/${film._id}`}
+              playing={true}
+            />
+          ) : (
+            <div className="flex justify-center items-center w-full h-96 bg-gray-100 uppercase cursor-pointer">
+              Subscribe to Watch
+            </div>
+          )}
         </div>
         <div className="grow">
-          <h2 className="text-5xl mb-6">{product.title}</h2>
-          <p className="mb-6 text-xl">{product.description}</p>
-          <span className="block mb-6 text-4xl">$ {product.price}</span>
-          <div className="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <label htmlFor="" className="text-xl">
-                Size
-              </label>
-              <select onChange={sizeChangeHandler}>
-                {product.size?.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+          <div className="mb-10">
+            <h2 className="text-5xl mb-3 font-bold text-teal-700 uppercase">
+              {film.film_name}
+            </h2>
+            <p>Release Year: {film.year}</p>
+          </div>
+          <div className="mb-10">
+            <p className="mb-3 text-3xl text-teal-700">Sypnosis</p>
+            <p className="text-xl">{film.film_description}</p>
+          </div>
+          <div className="grid sm:grid-cols-1 gap-4 mb-10">
+            <label htmlFor="" className="text-3xl text-teal-700">
+              Tags
+            </label>
+            <div className="flex flex-wrap justify-start align-start gap-3 uppercase">
+              {tags.map((tag, index) => (
+                <div
+                  key={index}
+                  className="rounded-full border border-black px-5"
+                >
+                  {tag}
+                </div>
+              ))}
             </div>
           </div>
-          <div className="grid sm:grid-cols-2 gap-4 mb-6">
-            <div className="flex items-center justify-start">
-              <span
-                className="cursor-pointer"
-                onClick={() => {
-                  quantity > 1 && setQuantity((prevState) => prevState - 1);
-                }}
-              >
-                <Remove />
-              </span>
-              <span className="mx-2 text-xl h-10 w-10 rounded-2xl border flex justify-center items-center">
-                {quantity}
-              </span>
-              <span
-                className="cursor-pointer"
-                onClick={() => {
-                  setQuantity((prevState) => prevState + 1);
-                }}
-              >
-                <Add />
-              </span>
+          <div className="grid sm:grid-cols-1 gap-4 mb-10">
+            <label htmlFor="" className="text-3xl text-teal-700">
+              Casts
+            </label>
+            <div className="flex flex-wrap justify-start align-start gap-3 uppercase">
+              {casts.map((cast, index) => (
+                <div
+                  key={index}
+                  className="rounded-full border border-black px-5"
+                >
+                  {cast}
+                </div>
+              ))}
             </div>
-            <div>
-              <button
-                onClick={addToCartHandler}
-                className="uppercase hover:bg-teal-700 hover:text-white transition ease-out duration-500 border-teal-700 border rounded p-4"
-              >
-                Add to cart
-              </button>
+          </div>
+          <div className="grid sm:grid-cols-1 gap-4 mb-6">
+            <label htmlFor="" className="text-3xl text-teal-700">
+              Director
+            </label>
+            <div className="flex flex-wrap justify-start align-start gap-3 uppercase">
+              {director.map((d, index) => (
+                <div
+                  key={index}
+                  className="rounded-full border border-black px-5"
+                >
+                  {d}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
-      <Newsletter />
       <Footer />
     </>
   );

@@ -4,6 +4,8 @@ const { filmUpload } = require("../middleware/Multer");
 const film = require("../controllers/FilmController");
 
 router.get("/", film.getFilms);
+router.get("/categories", film.categories);
+router.get("/random", film.getRandomFilms);
 router.get("/:film_id", film.getFilm);
 router.get("/stream/:film_id", film.stream);
 router.post(

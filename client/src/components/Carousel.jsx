@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { Link } from "react-scroll";
+import { Link as Scroll } from "react-scroll";
 
 const CAROUSEL_DATA = [
   {
-    url: "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    url: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
   },
   {
-    url: "https://images.unsplash.com/photo-1550995694-3f5f4a7e1bd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
+    url: "https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80",
   },
 ];
 const Carousel = () => {
@@ -31,21 +31,17 @@ const Carousel = () => {
       />
       <div className="absolute h-full w-full top-0 left-0 bg-black/30"></div>
       <div className="absolute h-full w-full top-0 left-0 flex flex-col justify-center items-center text-white uppercase px-4 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-8">summer sale</h1>
+        <h1 className="text-4xl md:text-6xl font-bold mb-8">
+          Unlimited Entertainment Awaits!
+        </h1>
         <p className="tracking-wider mb-16 text-md md:text-xl">
-          don't compromise on style! get flat 30% off for new arrivals.
+          Dive into a Universe of Blockbusters, Classics, and Hidden Gems.
         </p>
-        <Link
-          to="categories"
-          spy={true}
-          smooth={true}
-          offset={50}
-          duration={500}
-        >
+        <Scroll to="movies" spy={true} smooth={true} offset={50} duration={500}>
           <button className="border p-3 bg-white text-black text-lg hover:bg-teal-600 hover:border-none hover:text-white transition ease-out	duration-500">
-            Shop Now <ArrowRight />
+            Explore <ArrowRight />
           </button>
-        </Link>
+        </Scroll>
       </div>
       <div
         onClick={decrementIndex}

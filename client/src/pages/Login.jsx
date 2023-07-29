@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ const Login = () => {
   const history = useHistory();
   const usernameRef = useRef();
   const passwordRef = useRef();
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
     const username = usernameRef.current.value;
@@ -23,9 +24,6 @@ const Login = () => {
         password,
       })
     );
-    usernameRef.current.value = "";
-    passwordRef.current.value = "";
-    history.go(-1);
   };
   return (
     <div className="px-4 w-full h-screen flex justify-center items-center bg-login bg-no-repeat bg-cover">
@@ -51,7 +49,6 @@ const Login = () => {
         />
         <button
           className="mb-4 bg-teal-700 text-white p-2 disabled:bg-teal-500 disabled:cursor-not-allowed"
-          disabled={auth.isFetching}
           id="loginBtn"
         >
           Login

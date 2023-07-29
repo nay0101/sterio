@@ -1,3 +1,4 @@
+const Subscription = require("../models/subscriptions");
 const User = require("../models/users");
 const bcrypt = require("bcrypt");
 const MAX_AGE = 1000 * 3600 * 24;
@@ -9,19 +10,27 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ username: formatted_username });
     if (!user) {
-      error = "Wrong Username or Password.";
-      return res.status(200).send({ error });
+      // error = "Wrong Username or Password.";
+      return res.sendStatus(401);
     }
+    const subscription_result = await Subscription.findOne({
+      user_id: user._id,
+    });
     bcrypt.compare(password, user.password, (err, match) => {
       if (err) throw err;
       if (!match) {
-        error = "Wrong Username or Password.";
-        return res.status(200).send({ error });
+        // error = "Wrong Username or Password.";
+        // return res.status(200).send({ error });
+        return res.sendStatus(401);
       }
       if (match) {
         req.user_id = user._id;
         res.cookie("UID", req.user_id, { maxAge: MAX_AGE });
-        res.status(200).send({ user_id: req.user_id });
+        res.status(200).send({
+          user_id: req.user_id,
+          username,
+          subscription_status: subscription_result.subscription_status,
+        });
       }
     });
   } catch (err) {
@@ -37,8 +46,9 @@ const signUp = async (req, res) => {
   try {
     const user = await User.findOne({ username: formatted_username });
     if (user) {
-      error = "Username already exists";
-      return res.status(200).send({ error });
+      // error = "Username already exists";
+      // return res.status(200).send({ error });
+      return res.sendStatus(401);
     }
     const result = await User.create({
       email: email,
@@ -46,8 +56,18 @@ const signUp = async (req, res) => {
       password: encrypted_password,
     });
     req.user_id = result._id;
+    const subscription_result = await Subscription.create({
+      user_id: result._id,
+      subscription_duration: 0,
+      subscription_status: "Inactive",
+      subscription_fees: 0,
+    });
     res.cookie("UID", req.user_id, { maxAge: MAX_AGE });
-    res.status(201).send({ user_id: req.user_id });
+    res.status(201).send({
+      user_id: req.user_id,
+      username,
+      subscription_status: subscription_result.subscription_status,
+    });
   } catch (err) {
     res.sendStatus(400);
   }

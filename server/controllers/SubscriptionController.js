@@ -1,4 +1,5 @@
 const Subscription = require("../models/subscriptions");
+const User = require("../models/users");
 
 const getAllSubscriptions = async (req, res) => {
   try {
@@ -21,29 +22,26 @@ const getOneSubscription = async (req, res) => {
 
 const subscribe = async (req, res) => {
   try {
-    const { subscription_duration, subscription_fees } = req.body;
-    const user_id = req.user_id;
+    const { subscription_duration, subscription_fees, user_id } = req.body;
     const result = await Subscription.findOne({ user_id });
-    if (result) {
-      const total_subscription_duration =
-        result.subscription_duration + subscription_duration;
-      const total_subscription_fees =
-        result.subscription_fees + subscription_fees;
-      await Subscription.findByIdAndUpdate(result._id, {
-        subscription_duration: total_subscription_duration,
-        subscription_fees: total_subscription_fees,
-        subscription_status: "Active",
-      });
-      return res.sendStatus(200);
-    }
-    await Subscription.create({
-      user_id,
-      subscription_duration,
+    const user = await User.findById(user_id, "-password");
+    const total_subscription_duration =
+      result.subscription_duration + subscription_duration * 30;
+    const total_subscription_fees =
+      result.subscription_fees + subscription_fees;
+    await Subscription.findByIdAndUpdate(result._id, {
+      subscription_duration: total_subscription_duration,
+      subscription_fees: total_subscription_fees,
       subscription_status: "Active",
-      subscription_fees,
     });
-    res.sendStatus(200);
+    const subscription_result = await Subscription.findById(result._id);
+    res.status(200).json({
+      subscription_status: subscription_result.subscription_status,
+      user_id,
+      username: user.username,
+    });
   } catch (err) {
+    console.log(err);
     res.sendStatus(400);
   }
 };

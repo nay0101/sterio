@@ -102,8 +102,7 @@ const Orders = () => {
             onChange={(e) => setFilmName(e.target.value)}
           />
           Film Description:{" "}
-          <input
-            type="text"
+          <textarea
             name="filmdescripiton"
             onChange={(e) => setFilmDescription(e.target.value)}
           />

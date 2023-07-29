@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="p-8 grid gap-x-16 gap-y-4 md:grid-cols-3 border-t-2">
       <div>
         <h1 className="font-bold text-3xl uppercase mb-4 tracking-wider">
-          <a href="">SECO</a>
+          <a href="">STERIO</a>
         </h1>
         <p className="text-justify">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione
@@ -25,24 +25,12 @@ const Footer = () => {
               <a href="">Home</a>
             </li>
             <li>
-              <a href="">Man Fashion</a>
-            </li>
-            <li>
-              <a href="">Accessories</a>
-            </li>
-            <li>
-              <a href="">Order Tracking</a>
+              <a href="">Movies</a>
             </li>
           </ul>
           <ul>
             <li>
-              <a href="">Cart</a>
-            </li>
-            <li>
               <a href="">My Account</a>
-            </li>
-            <li>
-              <a href="">Wishlist</a>
             </li>
             <li>
               <a href="">Terms</a>
@@ -55,15 +43,15 @@ const Footer = () => {
         <ul>
           <li>
             <Place className="mr-4" />
-            <span>Cairo, Egypt</span>
+            <span>Yangon, Myanmar</span>
           </li>
           <li>
             <LocalPhone className="mr-4" />
-            <span>+201154251620</span>
+            <span>+95912345678</span>
           </li>
           <li>
             <MailOutline className="mr-4" />
-            <span>contact@hein.com</span>
+            <span>contact@mail.com</span>
           </li>
         </ul>
       </div>

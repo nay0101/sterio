@@ -22,6 +22,7 @@ const adminLoginRouter = require("./routes/adminLoginRouter");
 const filmsRouter = require("./routes/filmsRouter");
 const userRouter = require("./routes/userRouter");
 const subscriptionRouter = require("./routes/subscriptionRouter");
+const stripeRouter = require("./routes/stripe");
 const path = require("path");
 
 app.use(express.json());
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 //Login
-app.use("/api", loginRouter);
+app.use("/api/auth", loginRouter);
 app.use("/api/admin", adminLoginRouter);
 
 //Film Control
@@ -50,6 +51,9 @@ app.use("/api/users", userRouter);
 
 //Subscriptions
 app.use("/api/subscription", subscriptionRouter);
+
+//Payment
+app.use("/api/payment", stripeRouter);
 
 app.use("/api/public", express.static(path.join(__dirname, "public")));
 

@@ -11,15 +11,15 @@ const Signup = () => {
   const history = useHistory();
   const usernameRef = useRef();
   const passwordRef = useRef();
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
+  // const firstNameRef = useRef();
+  // const lastNameRef = useRef();
   const emailRef = useRef();
-  const formSubmitHandler = (e) => {
+  const formSubmitHandler = async (e) => {
     e.preventDefault();
     const username = usernameRef.current.value;
     const password = passwordRef.current.value;
-    const firstName = firstNameRef.current.value;
-    const lastName = lastNameRef.current.value;
+    // const firstName = firstNameRef.current.value;
+    // const lastName = lastNameRef.current.value;
     const email = emailRef.current.value;
     if (!password.trim() || !username.trim()) return;
     dispatch(
@@ -28,13 +28,9 @@ const Signup = () => {
         password,
         email,
       })
-    );
-    usernameRef.current.value = "";
-    passwordRef.current.value = "";
-    firstNameRef.current.value = "";
-    lastNameRef.current.value = "";
-    emailRef.current.value = "";
-    history.go(-1);
+    ).then(() => {
+      history.go(-1);
+    });
   };
   return (
     <div className="px-4 w-full h-screen flex justify-center items-center bg-login bg-no-repeat bg-cover">
@@ -44,7 +40,7 @@ const Signup = () => {
         className="border bg-white p-6 flex flex-col items-center min-w-[17rem] sm:min-w-[22rem] md:min-w-[35rem] max-w-[25rem]"
       >
         <h1 className="uppercase text-xl mb-4 font-bold">Sign up</h1>
-        <div className="grid gap-4 md:grid-cols-2 mb-4">
+        {/* <div className="grid gap-4 md:grid-cols-2 mb-4">
           <input
             className="block p-2 border-2 rounded focus:outline-none"
             type="text"
@@ -59,7 +55,7 @@ const Signup = () => {
             ref={lastNameRef}
             id="lastName"
           />
-        </div>
+        </div> */}
         <div className="grid gap-4 md:grid-cols-2 mb-4">
           <input
             className="block p-2 border-2 rounded focus:outline-none"

@@ -4,6 +4,6 @@ const subscription = require("../controllers/SubscriptionController");
 
 router.get("/", subscription.getAllSubscriptions);
 router.get("/:user_id", subscription.getOneSubscription);
-router.post("/", subscription.subscribe);
+router.put("/", subscription.subscribe);
 
 module.exports = router;

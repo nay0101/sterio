@@ -21,7 +21,7 @@ const login = async (req, res) => {
       if (match) {
         req.user_id = user._id;
         res.cookie("UID", req.user_id, { maxAge: MAX_AGE });
-        res.status(200).send({ user_id: req.user_id });
+        res.status(200).send({ user_id: req.user_id, username });
       }
     });
   } catch (err) {
@@ -47,7 +47,7 @@ const signUp = async (req, res) => {
     });
     req.user_id = result._id;
     res.cookie("UID", req.user_id, { maxAge: MAX_AGE });
-    res.status(201).send({ user_id: req.user_id });
+    res.status(201).send({ user_id: req.user_id, username });
   } catch (err) {
     res.sendStatus(400);
   }

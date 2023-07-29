@@ -36,6 +36,12 @@ const authSlice = createSlice({
       state.currentUser = null;
       state.error = false;
     },
+    subscribeSuccess(state, action) {
+      state.currentUser = action.payload;
+    },
+    subscribeFail(state) {
+      state.error = true;
+    },
   },
 });
 
@@ -47,6 +53,8 @@ export const {
   registerStart,
   registerFailure,
   registerSuccess,
+  subscribeSuccess,
+  subscribeFail,
 } = authSlice.actions;
 
 export default authSlice;

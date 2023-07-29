@@ -10,6 +10,8 @@ import Orders from "./pages/Orders";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import AllFilms from "./pages/AllFilms";
+import Subscriptions from "./pages/Subscriptions";
 
 const App = () => {
   const user = useSelector((store) => store.auth.currentUser);
@@ -18,21 +20,29 @@ const App = () => {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route path="/categories/:category">
+      <Route exact path="/categories/:category">
         <ShoppingCategorie />
       </Route>
-      <Route path="/film/:id">
+      <Route exact path="/film/:id">
         <FilmDetail />
       </Route>
-      <Route path="/cart">
+      <Route exact path="/films">
+        <AllFilms />
+      </Route>
+      <Route exact path="/cart">
         <ShoppingCart />
       </Route>
-      <Route path="/orders">
+      <Route exact path="/orders">
         <Orders />
       </Route>
-      <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
-      <Route path="/signup">
-        <Signup />
+      <Route exact path="/subscriptions">
+        <Subscriptions />
+      </Route>
+      <Route exact path="/login">
+        {user?.username ? <Redirect to="/" /> : <Login />}
+      </Route>
+      <Route exact path="/signup">
+        {user?.username ? <Redirect to="/" /> : <Signup />}
       </Route>
     </Switch>
   );
