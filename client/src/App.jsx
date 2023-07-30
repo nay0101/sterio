@@ -12,6 +12,8 @@ import Login from "./pages/Login";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import AllFilms from "./pages/AllFilms";
 import Subscriptions from "./pages/Subscriptions";
+import Dashboard from "./admin/Dashboard";
+import AddFilms from "./admin/AddFilms";
 
 const App = () => {
   const user = useSelector((store) => store.auth.currentUser);
@@ -32,7 +34,7 @@ const App = () => {
       <Route exact path="/cart">
         <ShoppingCart />
       </Route>
-      <Route exact path="/orders">
+      <Route exact path="/test">
         <Orders />
       </Route>
       <Route exact path="/subscriptions">
@@ -43,6 +45,12 @@ const App = () => {
       </Route>
       <Route exact path="/signup">
         {user?.username ? <Redirect to="/" /> : <Signup />}
+      </Route>
+      <Route exact path="/admin">
+        <Dashboard />
+      </Route>
+      <Route exact path="/admin/addfilm">
+        <AddFilms />
       </Route>
     </Switch>
   );

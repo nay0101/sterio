@@ -28,9 +28,7 @@ const Signup = () => {
         password,
         email,
       })
-    ).then(() => {
-      history.go(-1);
-    });
+    );
   };
   return (
     <div className="px-4 w-full h-screen flex justify-center items-center bg-login bg-no-repeat bg-cover">
@@ -86,7 +84,11 @@ const Signup = () => {
             placeholder='Confirm Password'
           /> */}
         </div>
-
+        {auth.error && (
+          <p className="text-red-500 pb-2">
+            Something went wrong. Please try again.
+          </p>
+        )}
         <p className="mb-4 ">
           By Creating an accounct I consent to the processing of my personal
           data in accordance with the &nbsp;

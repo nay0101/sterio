@@ -23,7 +23,7 @@ const SubscriptionPlans = () => {
       <div className="text-3xl my-5">Current Plans</div>
       {user.subscription_status === "Active" ? (
         <div className="text-xl text-teal-700 border-b pb-5">
-          Days Remaining: {duration}
+          Credit Remaining: {duration} Days
         </div>
       ) : (
         <div className="text-xl text-teal-700 border-b pb-5">

@@ -112,7 +112,7 @@ const getFilms = async (req, res) => {
 
 const getRandomFilms = async (req, res) => {
   try {
-    const result = await Film.aggregate([{ $sample: { size: 2 } }]);
+    const result = await Film.aggregate([{ $sample: { size: 5 } }]);
     res.status(200).json({ result });
   } catch (err) {
     res.sendStatus(400);

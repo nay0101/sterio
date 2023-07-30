@@ -52,7 +52,7 @@ const Search = ({ setOpen }) => {
           />
         </div>
 
-        <div className="flex flex-col justify-start items-start mt-3 w-3/6 h-4/5 bg-white overflow-y-auto rounded">
+        <div className="flex flex-col justify-start items-start mt-3 w-3/6 bg-white overflow-y-auto rounded">
           {filteredResults &&
             filteredResults.map((result, index) => (
               <Link
