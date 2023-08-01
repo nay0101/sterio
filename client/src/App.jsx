@@ -12,8 +12,8 @@ import Login from "./pages/Login";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import AllFilms from "./pages/AllFilms";
 import Subscriptions from "./pages/Subscriptions";
-import Dashboard from "./admin/Dashboard";
 import AddFilms from "./admin/AddFilms";
+import Dashboard from "./admin/Dashboard";
 
 const App = () => {
   const user = useSelector((store) => store.auth.currentUser);

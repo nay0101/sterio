@@ -42,7 +42,7 @@ const signUp = async (req, res) => {
   const { username, email, password } = req.body;
   const formatted_username = username.toLowerCase();
   const encrypted_password = await bcrypt.hash(password, 12);
-  let error;
+  let error, subscription_result, subscription;
   try {
     const user = await User.findOne({ username: formatted_username });
     if (user) {
@@ -56,12 +56,16 @@ const signUp = async (req, res) => {
       password: encrypted_password,
     });
     req.user_id = result._id;
-    const subscription_result = await Subscription.create({
-      user_id: result._id,
-      subscription_duration: 0,
-      subscription_status: "Inactive",
-      subscription_fees: 0,
-    });
+    if ((subscription = await Subscription.findOne({ user_id: result._id }))) {
+      subscription_result = subscription;
+    } else {
+      subscription_result = await Subscription.create({
+        user_id: result._id,
+        subscription_duration: 0,
+        subscription_status: "Inactive",
+        subscription_fees: 0,
+      });
+    }
     res.cookie("UID", req.user_id, { maxAge: MAX_AGE });
     res.status(201).send({
       user_id: req.user_id,

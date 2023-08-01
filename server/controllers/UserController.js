@@ -1,9 +1,10 @@
 const User = require("../models/users");
 const Admin = require("../models/admins");
+const Subscription = require("../models/subscriptions");
 
 const getAllUsers = async (req, res) => {
   try {
-    const result = await User.find({}, "-password");
+    const result = await User.find({}, "-password").sort({ updatedAt: -1 });
     res.status(200).json({ result });
   } catch (err) {
     res.sendStatus(400);
@@ -12,7 +13,7 @@ const getAllUsers = async (req, res) => {
 
 const getAllAdmins = async (req, res) => {
   try {
-    const result = await Admin.find({}, "-password");
+    const result = await Admin.find({}, "-password").sort({ updatedAt: -1 });
     res.status(200).json({ result });
   } catch (err) {
     res.sendStatus(400);
@@ -33,13 +34,15 @@ const getOneUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   const user_id = req.params.user_id;
   try {
-    if (!(await User.findByIdAndDelete(user_id)))
+    if (!(await User.findByIdAndDelete(user_id))) {
       await Admin.findByIdAndDelete(user_id);
+    }
     res.status(200).end();
   } catch (err) {
     res.sendStatus(400);
   }
 };
+
 const updateUser = async (req, res) => {
   try {
     const user_id = req.params.user_id;
