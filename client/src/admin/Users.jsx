@@ -1,7 +1,8 @@
-import DataTable from "react-data-table-component";
 import { publicRequest } from "../request-methods";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import ActionButtons from "../components/ActionButtons";
+import Table from "../components/Table";
+import { Add } from "@mui/icons-material";
 
 const Users = () => {
   const [normalUsers, setNormalUsers] = useState([]);
@@ -70,56 +71,6 @@ const Users = () => {
     },
   ];
 
-  const convertArrayOfObjectsToCSV = (array) => {
-    let result;
-    const columnDelimiter = ",";
-    const lineDelimiter = "\n";
-    const keys = Object.keys(normalUsers[0]);
-    result = "";
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
-    array.forEach((item) => {
-      let ctr = 0;
-      keys.forEach((key) => {
-        if (ctr > 0) result += columnDelimiter;
-
-        result += item[key];
-
-        ctr++;
-      });
-      result += lineDelimiter;
-    });
-    return result;
-  };
-
-  function downloadCSV(array) {
-    const link = document.createElement("a");
-    let csv = convertArrayOfObjectsToCSV(array);
-    if (csv == null) return;
-
-    const filename = "export.csv";
-
-    if (!csv.match(/^data:text\/csv/i)) {
-      csv = `data:text/csv;charset=utf-8,${csv}`;
-    }
-
-    link.setAttribute("href", encodeURI(csv));
-    link.setAttribute("download", filename);
-    link.click();
-  }
-
-  const Export = ({ onExport }) => <button onClick={onExport}>Export</button>;
-
-  const reportNormalUser = useMemo(
-    () => <Export onExport={() => downloadCSV(normalUsers)} />,
-    [normalUsers]
-  );
-
-  const reportAdminUser = useMemo(
-    () => <Export onExport={() => downloadCSV(adminUsers)} />,
-    [adminUsers]
-  );
-
   const getSubscription = async () => {
     const { result } = (await publicRequest.get(`/subscription`)).data;
     return result;
@@ -168,11 +119,19 @@ const Users = () => {
     }
   };
 
-  useEffect(() => {
-    getNormalUsers();
-  }, []);
+  const TableTitle = ({ name }) => {
+    return (
+      <div className="flex flex-wrap items-center gap-5 ">
+        <p className="text-2xl">{name}</p>
+        <button className="flex items-center justify-center border border-teal-700 rounded px-2 py-1 text-2xl text-teal-700 hover:bg-teal-700 hover:text-white">
+          <Add fontSize="" />
+        </button>
+      </div>
+    );
+  };
 
   useEffect(() => {
+    getNormalUsers();
     getAdminUsers();
   }, []);
 
@@ -180,21 +139,17 @@ const Users = () => {
     <div className="py-5 pr-5">
       <p className="uppercase text-3xl">Users</p>
       <div className="mt-10">
-        <DataTable
-          title="Normal Users"
-          columns={normalUserColumns}
+        <Table
+          title={<TableTitle name="Normal Users" />}
           data={normalUsers}
-          actions={reportNormalUser}
-          pagination
+          columns={normalUserColumns}
         />
       </div>
       <div className="mt-10">
-        <DataTable
-          title="Admin Users"
-          columns={adminUserColumns}
+        <Table
+          title={<TableTitle name="Admin Users" />}
           data={adminUsers}
-          actions={reportAdminUser}
-          pagination
+          columns={adminUserColumns}
         />
       </div>
     </div>

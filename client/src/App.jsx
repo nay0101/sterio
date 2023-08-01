@@ -3,9 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Home from "./pages/Home";
-import ShoppingCategorie from "./pages/ShoppingCategorie";
 import FilmDetail from "./pages/FilmDetail";
-import ShoppingCart from "./pages/ShoppingCart";
 import Orders from "./pages/Orders";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -22,17 +20,11 @@ const App = () => {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/categories/:category">
-        <ShoppingCategorie />
-      </Route>
       <Route exact path="/film/:id">
         <FilmDetail />
       </Route>
       <Route exact path="/films">
         <AllFilms />
-      </Route>
-      <Route exact path="/cart">
-        <ShoppingCart />
       </Route>
       <Route exact path="/test">
         <Orders />
