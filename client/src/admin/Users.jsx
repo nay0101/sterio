@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 import ActionButtons from "../components/ActionButtons";
 import Table from "../components/Table";
 import { Add } from "@mui/icons-material";
+import UserModal from "../components/UserModal";
 
 const Users = () => {
   const [normalUsers, setNormalUsers] = useState([]);
   const [adminUsers, setAdminUsers] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [action, setAction] = useState("");
+  const [userType, setUserType] = useState("");
 
   const normalUserColumns = [
     {
@@ -42,6 +46,10 @@ const Users = () => {
           id={data.id}
           setNormalUsers={setNormalUsers}
           setAdminUsers={setAdminUsers}
+          type="normal"
+          setOpen={setOpen}
+          setAction={setAction}
+          setUserType={setUserType}
         />
       ),
     },
@@ -66,6 +74,10 @@ const Users = () => {
           id={data.id}
           setNormalUsers={setNormalUsers}
           setAdminUsers={setAdminUsers}
+          type="admin"
+          setOpen={setOpen}
+          setAction={setAction}
+          setUserType={setUserType}
         />
       ),
     },
@@ -119,11 +131,20 @@ const Users = () => {
     }
   };
 
-  const TableTitle = ({ name }) => {
+  const openAddModal = (type, action) => {
+    setUserType(type);
+    setAction(action);
+    setOpen(true);
+  };
+
+  const TableTitle = ({ name, type }) => {
     return (
       <div className="flex flex-wrap items-center gap-5 ">
         <p className="text-2xl">{name}</p>
-        <button className="flex items-center justify-center border border-teal-700 rounded px-2 py-1 text-2xl text-teal-700 hover:bg-teal-700 hover:text-white">
+        <button
+          className="flex items-center justify-center border border-teal-700 rounded px-2 py-1 text-2xl text-teal-700 hover:bg-teal-700 hover:text-white"
+          onClick={() => openAddModal(type, "add")}
+        >
           <Add fontSize="" />
         </button>
       </div>
@@ -136,23 +157,28 @@ const Users = () => {
   }, []);
 
   return (
-    <div className="py-5 pr-5">
-      <p className="uppercase text-3xl">Users</p>
-      <div className="mt-10">
-        <Table
-          title={<TableTitle name="Normal Users" />}
-          data={normalUsers}
-          columns={normalUserColumns}
-        />
+    <>
+      <div className="py-5 pr-5">
+        <p className="uppercase text-3xl">Users</p>
+        <div className="mt-10">
+          <Table
+            title={<TableTitle name="Normal Users" type="normal" />}
+            data={normalUsers}
+            columns={normalUserColumns}
+          />
+        </div>
+        <div className="mt-10">
+          <Table
+            title={<TableTitle name="Admin Users" type="admin" />}
+            data={adminUsers}
+            columns={adminUserColumns}
+          />
+        </div>
       </div>
-      <div className="mt-10">
-        <Table
-          title={<TableTitle name="Admin Users" />}
-          data={adminUsers}
-          columns={adminUserColumns}
-        />
-      </div>
-    </div>
+      {open && (
+        <UserModal setOpen={setOpen} action={action} userType={userType} />
+      )}
+    </>
   );
 };
 

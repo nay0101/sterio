@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
 import ExportButton from "./ExportButton";
 import TableFilter from "./TableFilter";
@@ -26,17 +26,19 @@ const Table = ({ title, data, columns }) => {
   );
 
   return (
-    <DataTable
-      title={title}
-      columns={columns}
-      data={filteredData}
-      actions={exportReport}
-      pagination
-      paginationResetDefaultPage={resetPaginationToggle}
-      subHeader
-      subHeaderComponent={search}
-      persistTableHead
-    />
+    <>
+      <DataTable
+        title={title}
+        columns={columns}
+        data={filteredData}
+        actions={exportReport}
+        pagination
+        paginationResetDefaultPage={resetPaginationToggle}
+        subHeader
+        subHeaderComponent={search}
+        persistTableHead
+      />
+    </>
   );
 };
 
