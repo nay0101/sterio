@@ -176,7 +176,12 @@ const Users = () => {
         </div>
       </div>
       {open && (
-        <UserModal setOpen={setOpen} action={action} userType={userType} />
+        <UserModal
+          setOpen={setOpen}
+          action={action}
+          userType={userType}
+          userData={{ normal: normalUsers, admin: adminUsers }}
+        />
       )}
     </>
   );

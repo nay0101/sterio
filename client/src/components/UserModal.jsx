@@ -3,9 +3,14 @@ const UserModal = ({ setOpen, action, userType, userData }) => {
     setOpen(false);
   };
 
-  const add = () => {};
+  const add = () => {
+    if (!userType || !action) return;
+  };
 
-  const edit = () => {};
+  const edit = () => {
+    if (!userType || !action) return;
+    console.log(userData);
+  };
 
   return (
     <div className="flex justify-center items-center fixed bg-black/80 w-screen h-full top-0 left-0 z-10">
@@ -15,21 +20,36 @@ const UserModal = ({ setOpen, action, userType, userData }) => {
         </p>
         <form className="flex flex-col gap-2 mt-5" action="#">
           <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            className="mb-5 w-80 p-2 outline outline-1 rounded"
-            placeholder="Please Enter Username"
-          />
+          {action === "add" ? (
+            <input
+              type="text"
+              name="username"
+              id="username"
+              className="mb-5 w-80 p-2 outline outline-1 rounded"
+              placeholder="Please Enter Username"
+            />
+          ) : (
+            <div
+              id="username"
+              className="mb-5 w-80 p-2 outline outline-1 rounded"
+            >
+              Username
+            </div>
+          )}
           <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="mb-5 w-80 p-2 outline outline-1 rounded"
-            placeholder="Please Enter Email"
-          />
+          {action === "add" ? (
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="mb-5 w-80 p-2 outline outline-1 rounded"
+              placeholder="Please Enter Email"
+            />
+          ) : (
+            <div id="email" className="mb-5 w-80 p-2 outline outline-1 rounded">
+              Email
+            </div>
+          )}
           <label htmlFor="password">Password</label>
           <input
             type="password"
