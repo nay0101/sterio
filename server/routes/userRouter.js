@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const user = require("../controllers/UserController");
 
+// users
 router.get("/", user.getAllUsers);
 router.get("/getadmins", user.getAllAdmins);
 router.get("/:user_id", user.getOneUser);

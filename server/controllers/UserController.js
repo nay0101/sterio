@@ -1,6 +1,5 @@
 const User = require("../models/users");
 const Admin = require("../models/admins");
-const Subscription = require("../models/subscriptions");
 
 const getAllUsers = async (req, res) => {
   try {

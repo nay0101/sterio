@@ -3,6 +3,7 @@ const router = express.Router();
 const { filmUpload } = require("../middleware/Multer");
 const film = require("../controllers/FilmController");
 
+// film
 router.get("/", film.getFilms);
 router.get("/categories", film.categories);
 router.get("/random", film.getRandomFilms);

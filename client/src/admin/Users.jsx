@@ -1,9 +1,11 @@
 import { publicRequest } from "../request-methods";
 import { useEffect, useState } from "react";
-import ActionButtons from "../components/ActionButtons";
+import UserActionButtons from "../components/UsersActionButtons";
 import Table from "../components/Table";
 import { Add } from "@mui/icons-material";
 import UserModal from "../components/UserModal";
+import dayjs from "dayjs";
+import AdminTitleBar from "../components/AdminTitleBar";
 
 const Users = () => {
   const [normalUsers, setNormalUsers] = useState([]);
@@ -11,6 +13,7 @@ const Users = () => {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
   const [userType, setUserType] = useState("");
+  const [userData, setUserData] = useState("");
 
   const normalUserColumns = [
     {
@@ -39,13 +42,21 @@ const Users = () => {
       sortable: true,
     },
     {
+      name: "Last Modified Timestamp",
+      selector: (row) => row.lastModified,
+      sortable: true,
+    },
+    {
       name: "Actions",
       button: "true",
       cell: (data) => (
-        <ActionButtons
+        <UserActionButtons
           id={data.id}
           setNormalUsers={setNormalUsers}
           setAdminUsers={setAdminUsers}
+          normalUsers={normalUsers}
+          adminUsers={adminUsers}
+          setUserData={setUserData}
           type="normal"
           setOpen={setOpen}
           setAction={setAction}
@@ -67,13 +78,21 @@ const Users = () => {
       sortable: true,
     },
     {
+      name: "Last Modified Timestamp",
+      selector: (row) => row.lastModified,
+      sortable: true,
+    },
+    {
       name: "Actions",
       button: "true",
       cell: (data) => (
-        <ActionButtons
+        <UserActionButtons
           id={data.id}
           setNormalUsers={setNormalUsers}
           setAdminUsers={setAdminUsers}
+          normalUsers={normalUsers}
+          adminUsers={adminUsers}
+          setUserData={setUserData}
           type="admin"
           setOpen={setOpen}
           setAction={setAction}
@@ -106,6 +125,7 @@ const Users = () => {
             status: subscription[0]?.subscription_status,
             fees: `$ ${subscription[0]?.subscription_fees}`,
             remaining: `${subscription[0]?.subscription_duration} Days`,
+            lastModified: dayjs(user.updatedAt).format("DD/MM/YY hh:mm:ss A"),
           },
         ];
       });
@@ -122,7 +142,12 @@ const Users = () => {
       result.forEach((user) => {
         users = [
           ...users,
-          { id: user._id, username: user.username, email: user.email },
+          {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            lastModified: dayjs(user.updatedAt).format("DD/MM/YY hh:mm:ss A"),
+          },
         ];
       });
       setAdminUsers(users);
@@ -154,12 +179,12 @@ const Users = () => {
   useEffect(() => {
     getNormalUsers();
     getAdminUsers();
-  }, []);
+  }, [open]);
 
   return (
     <>
       <div className="py-5 pr-5">
-        <p className="uppercase text-3xl">Users</p>
+        <AdminTitleBar />
         <div className="mt-10">
           <Table
             title={<TableTitle name="Normal Users" type="normal" />}
@@ -180,7 +205,9 @@ const Users = () => {
           setOpen={setOpen}
           action={action}
           userType={userType}
-          userData={{ normal: normalUsers, admin: adminUsers }}
+          userData={userData}
+          setNormalUsers={setNormalUsers}
+          setAdminUsers={setAdminUsers}
         />
       )}
     </>

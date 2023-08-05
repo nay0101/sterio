@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "chart.js": "^4.3.2",
+    "dayjs": "^1.11.9",
     "random-hex": "^1.0.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

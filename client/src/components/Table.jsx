@@ -8,10 +8,13 @@ const Table = ({ title, data, columns }) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   const filteredData = data.filter((f_data) =>
-    f_data.username.toLowerCase().includes(filterText.toLowerCase())
+    Object.values(f_data)[1].toLowerCase().includes(filterText.toLowerCase())
   );
 
-  const exportReport = useMemo(() => <ExportButton data={data} />, [data]);
+  const exportReport = useMemo(
+    () => <ExportButton data={filteredData} />,
+    [filteredData]
+  );
 
   const search = useMemo(
     () => (

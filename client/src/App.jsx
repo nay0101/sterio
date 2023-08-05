@@ -10,11 +10,12 @@ import Login from "./pages/Login";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import AllFilms from "./pages/AllFilms";
 import Subscriptions from "./pages/Subscriptions";
-import AddFilms from "./admin/AddFilms";
 import Dashboard from "./admin/Dashboard";
+import AdminLogin from "./admin/AdminLogin";
 
 const App = () => {
   const user = useSelector((store) => store.auth.currentUser);
+  const admin = useSelector((store) => store.admin.currentUser);
   return (
     <Switch>
       <Route exact path="/">
@@ -39,10 +40,7 @@ const App = () => {
         {user?.username ? <Redirect to="/" /> : <Signup />}
       </Route>
       <Route exact path="/admin">
-        <Dashboard />
-      </Route>
-      <Route exact path="/admin/addfilm">
-        <AddFilms />
+        {admin?.username ? <Dashboard /> : <AdminLogin />}
       </Route>
     </Switch>
   );

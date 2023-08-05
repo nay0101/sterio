@@ -18,7 +18,7 @@ const TableFilter = ({
       <input
         id="search"
         type="text"
-        placeholder="Filter By Username"
+        placeholder="Filter"
         className="px-2 py-1 outline outline-0 border-b"
         onChange={(e) => setFilterText(e.target.value)}
         value={filterText}
