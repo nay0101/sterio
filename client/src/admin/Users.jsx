@@ -85,20 +85,23 @@ const Users = () => {
     {
       name: "Actions",
       button: "true",
-      cell: (data) => (
-        <UserActionButtons
-          id={data.id}
-          setNormalUsers={setNormalUsers}
-          setAdminUsers={setAdminUsers}
-          normalUsers={normalUsers}
-          adminUsers={adminUsers}
-          setUserData={setUserData}
-          type="admin"
-          setOpen={setOpen}
-          setAction={setAction}
-          setUserType={setUserType}
-        />
-      ),
+      cell: (data) =>
+        data.id !== "64c8c7332ec7e6907cdaf7bf" ? (
+          <UserActionButtons
+            id={data.id}
+            setNormalUsers={setNormalUsers}
+            setAdminUsers={setAdminUsers}
+            normalUsers={normalUsers}
+            adminUsers={adminUsers}
+            setUserData={setUserData}
+            type="admin"
+            setOpen={setOpen}
+            setAction={setAction}
+            setUserType={setUserType}
+          />
+        ) : (
+          <></>
+        ),
     },
   ];
 

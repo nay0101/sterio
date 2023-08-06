@@ -39,9 +39,7 @@ const UserActionButtons = ({
   return (
     <div className="flex gap-2">
       <Edit className="text-green-700 cursor-pointer" onClick={editUser} />
-      {id !== "64c8c7332ec7e6907cdaf7bf" && (
-        <Delete className="text-red-700 cursor-pointer" onClick={deleteUser} />
-      )}
+      <Delete className="text-red-700 cursor-pointer" onClick={deleteUser} />
     </div>
   );
 };
