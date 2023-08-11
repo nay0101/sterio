@@ -10,7 +10,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useEffect } from "react";
 import dayjs from "dayjs";
 import ExportButton from "../components/ExportButton";
 import AdminTitleBar from "../components/AdminTitleBar";

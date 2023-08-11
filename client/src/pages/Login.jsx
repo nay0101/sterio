@@ -1,15 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { login } from "../store/auth-actions";
 
 const Login = () => {
   const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
-  const history = useHistory();
   const usernameRef = useRef();
   const passwordRef = useRef();
 

@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 import { publicRequest } from "../request-methods";
 
-const UserModal = ({
-  setOpen,
-  action,
-  userType,
-  userData,
-  setNormalUsers,
-  setAdminUsers,
-}) => {
+const UserModal = ({ setOpen, action, userType, userData }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

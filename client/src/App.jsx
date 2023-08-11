@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 import Home from "./pages/Home";
 import FilmDetail from "./pages/FilmDetail";
-import Orders from "./pages/Orders";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
@@ -26,9 +25,6 @@ const App = () => {
       </Route>
       <Route exact path="/films">
         <AllFilms />
-      </Route>
-      <Route exact path="/test">
-        <Orders />
       </Route>
       <Route exact path="/subscriptions">
         <Subscriptions />

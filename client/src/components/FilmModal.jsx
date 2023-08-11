@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL, publicRequest } from "../request-methods";
+import { publicRequest } from "../request-methods";
 
 const FilmModal = ({ action, setOpen, filmData }) => {
   const [filmName, setFilmName] = useState("");

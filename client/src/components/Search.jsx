@@ -51,7 +51,6 @@ const Search = ({ setOpen }) => {
             onFocus={getFilms}
           />
         </div>
-
         <div className="flex flex-col justify-start items-start mt-3 w-3/6 bg-white overflow-y-auto rounded">
           {filteredResults &&
             filteredResults.map((result, index) => (

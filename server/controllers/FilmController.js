@@ -12,7 +12,6 @@ const stream = async (req, res) => {
       return res.status(200).send({ error });
     }
     const filePath = film.source;
-    // const filePath = "public\\videos\\sound.mp4";
     if (!filePath) {
       return res.status(404).send("File not found");
     }

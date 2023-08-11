@@ -9,13 +9,11 @@ const login = async (req, res) => {
   try {
     const user = await Admin.findOne({ username: formatted_username });
     if (!user) {
-      // error = "Wrong Username or Password.";
       return res.sendStatus(401);
     }
     bcrypt.compare(password, user.password, (err, match) => {
       if (err) throw err;
       if (!match) {
-        // error = "Wrong Username or Password.";
         return res.sendStatus(401);
       }
       if (match) {

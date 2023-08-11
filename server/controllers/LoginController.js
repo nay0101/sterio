@@ -6,11 +6,9 @@ const MAX_AGE = 1000 * 3600 * 24;
 const login = async (req, res) => {
   const { username, password } = req.body;
   const formatted_username = username.toLowerCase();
-  let error = "";
   try {
     const user = await User.findOne({ username: formatted_username });
     if (!user) {
-      // error = "Wrong Username or Password.";
       return res.sendStatus(401);
     }
     const subscription_result = await Subscription.findOne({
@@ -19,8 +17,6 @@ const login = async (req, res) => {
     bcrypt.compare(password, user.password, (err, match) => {
       if (err) throw err;
       if (!match) {
-        // error = "Wrong Username or Password.";
-        // return res.status(200).send({ error });
         return res.sendStatus(401);
       }
       if (match) {
@@ -46,8 +42,6 @@ const signUp = async (req, res) => {
   try {
     const user = await User.findOne({ username: formatted_username });
     if (user) {
-      // error = "Username already exists";
-      // return res.status(200).send({ error });
       return res.sendStatus(401);
     }
     const result = await User.create({
