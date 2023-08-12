@@ -28,6 +28,5 @@ router.put(
   film.updateFilm
 );
 router.delete("/:film_id", film.deleteFilm);
-router.post("/:film/rate", film.rateFilm);
 
 module.exports = router;

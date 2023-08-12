@@ -1,5 +1,4 @@
 const Film = require("../models/films");
-const Rating = require("../models/ratings");
 const Category = require("../models/categories");
 const fs = require("fs");
 
@@ -157,27 +156,6 @@ const deleteFilm = async (req, res) => {
   }
 };
 
-const rateFilm = async (req, res) => {
-  try {
-    const { rating } = req.body;
-    const film_id = req.params.film_id;
-    const user_id = req.user_id;
-    const result = await Rating.findOne({ user_id });
-    if (result) {
-      await Rating.findOneAndUpdate({ user_id }, { rating });
-      return res.sendStatus(200);
-    }
-    await Rating.create({
-      user_id,
-      film_id,
-      rating,
-    });
-    res.sendStatus(200);
-  } catch (err) {
-    res.sendStatus(400);
-  }
-};
-
 const categories = async (req, res) => {
   try {
     const result = await Category.find().sort({ name: 1 });
@@ -194,7 +172,6 @@ module.exports = {
   uploadFilm,
   updateFilm,
   deleteFilm,
-  rateFilm,
   getRandomFilms,
   categories,
 };
